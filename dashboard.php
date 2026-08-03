@@ -3,7 +3,7 @@ require_once 'pages/config/db.php';
 session_start();
 
 // Vérifier si l'utilisateur est connecté et est admin
-if (!isset($_SESSION['user_id']) || !$_SESSION['profile'] === 'admin') {
+if (!isset($_SESSION['user_id']) || $_SESSION['profile'] !== 'admin') {
     header("Location: login.php");
     exit();
 }

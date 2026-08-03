@@ -1,0 +1,30 @@
+# Deny access to sensitive directories and files
+<FilesMatch "\.(sql|md|json|lock|log|env)$">
+    Require all denied
+</FilesMatch>
+
+# Deny access to db directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^db/ - [F,L]
+    RewriteRule ^includes/ - [F,L]
+    RewriteRule ^pages/config/ - [F,L]
+    RewriteRule ^vendor/ - [F,L]
+    RewriteRule ^seed_db\.php$ - [F,L]
+    RewriteRule ^Dockerfile$ - [F,L]
+    RewriteRule ^composer\.(json|lock)$ - [F,L]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
+
+# Set default charset
+AddDefaultCharset UTF-8
