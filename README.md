@@ -1,14 +1,14 @@
 # GestionÉtudiants
 
-Application web de gestion des étudiants et des filières développée avec PHP, MySQL et Bootstrap.
+Application web moderne de gestion des étudiants et des filières développée avec PHP, MySQL (TiDB Cloud) et Bootstrap.
 
 ## Fonctionnalités
 
 - **Gestion des Étudiants**
   - Ajouter, modifier et supprimer des étudiants
   - Gérer les informations personnelles
-  - Upload de photos de profil
-  - Affichage en liste avec filtrage
+  - Affichage en liste avec vue détaillée
+  - UI moderne "Glassmorphism"
 
 - **Gestion des Filières**
   - Création et gestion des filières
@@ -17,128 +17,74 @@ Application web de gestion des étudiants et des filières développée avec PHP
 
 - **Système d'Authentification**
   - Inscription et connexion sécurisée
-  - Réinitialisation de mot de passe par email
-  - Gestion des profils utilisateurs
-  - Protection contre les injections SQL
+  - Gestion des profils utilisateurs (Administrateur / Invité)
 
 ## Prérequis
 
 - PHP 8.0 ou supérieur
-- MySQL 5.7 ou supérieur
+- MySQL 5.7 ou supérieur (ou TiDB)
 - Apache 2.4 ou supérieur
-- Composer (pour les dépendances PHP)
-- Extension PHP :
-  - mysqli
-  - pdo_mysql
-  - openssl
-  - fileinfo
-  - gd
+- Docker (Optionnel, pour le déploiement)
+- Extension PHP : `pdo_mysql`
 
-## Installation
+## Installation en Local
 
 1. **Cloner le projet**
 
    ```bash
-   git clone https://github.com/votre-username/Gestion_Etudiants.git
-   cd Gestion_Etudiants
+   git clone https://github.com/ReedBelca10/students-management.git
+   cd students-management
    ```
 
-2. **Installer les dépendances**
-
-   ```bash
-   composer install
-   ```
-
-3. **Configuration de la base de données**
+2. **Configuration de la base de données**
    - Créer une base de données MySQL
-   - Importer les fichiers SQL dans l'ordre suivant :
+   - Importer le fichier SQL :
      ```bash
      mysql -u votre_utilisateur -p votre_base < db/schema.sql
-     mysql -u votre_utilisateur -p votre_base < db/seed.sql
      ```
-   - Configurer les accès dans `pages/config/db.php`
+   - Configurer les accès dans `pages/config/db.php` ou via les variables d'environnement (`DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASS`, `DB_NAME`).
 
-4. **Configuration email (pour la réinitialisation de mot de passe)**
-   - Modifier les paramètres SMTP dans `pages/config/mail.php`
+3. **Démarrage**
+   - Placez le dossier dans `htdocs` ou `www` de votre serveur local (WAMP/XAMPP).
+   - Accédez à l'application via : `http://localhost/students-management/`
 
-## Démarrage
+## Déploiement en Production (Render & Docker)
 
-1. Assurez-vous que votre serveur Apache est en cours d'exécution
-2. Accédez à l'application via votre navigateur :
-   ```
-   http://localhost/Gestion_Etudiants/
-   ```
+Ce projet est configuré pour être déployé facilement sur [Render](https://render.com/) à l'aide de Docker.
 
-## Compte par défaut
+1. Créez un **Web Service** sur Render lié à votre dépôt GitHub.
+2. Choisissez **Docker** comme environnement d'exécution (Render détectera automatiquement le fichier `Dockerfile`).
+3. Ajoutez les **Variables d'environnement** requises pour la connexion à la base de données de production (ex: TiDB Cloud) :
+   - `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASS`, `DB_NAME`
+4. Cliquez sur **Deploy**.
 
-- **Admin**
-  - Email : testneyla@gmail.com
-  - Nom utilisateur : Reed1020
-  - Mot de passe : 1234Reed$
+## Compte par défaut (Admin)
 
-## Structure du projet
-
-```
-Gestion_Etudiants/
- assets/
-    css/
-    js/
-    img/
- db/
-    schema.sql
-    seed.sql
- includes/
-    auth.php
-    header.php
-    footer.php
- pages/
-    config/
- vendor/
- index.php
-```
+- Email : testneyla@gmail.com
+- Nom utilisateur : Reed1020
+- Mot de passe : 1234Reed$
 
 ## Technologies utilisées
 
 - **Frontend**
-  - HTML5
-  - CSS3
+  - HTML5 / CSS3 (Design Glassmorphism, animations)
   - JavaScript
   - Bootstrap 5
   - Font Awesome
-  - Animate.css
 
-- **Backend**
-  - PHP 8
-  - MySQL
-  - PHPMailer
+- **Backend & Infrastructure**
+  - PHP 8.2
+  - MySQL / TiDB Cloud (Base de données)
+  - Docker (Conteneurisation)
+  - Render (Hébergement web)
 
-## Sécurité
+## Sécurité Avancée
 
-- Protection contre les injections SQL
-- Hachage sécurisé des mots de passe
-- Validation des données
-- Protection CSRF
-- Sessions sécurisées
-- Connexion SMTP sécurisée
-
-## Mises à jour régulières
-
-Pour mettre à jour votre installation :
-
-```bash
-git pull origin main
-composer update
-```
-
-## Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à :
-
-1. Fork le projet
-2. Créer une branche pour votre fonctionnalité
-3. Commit vos changements
-4. Push sur votre fork
-5. Ouvrir une Pull Request
+- Protection contre les Injections SQL (via PDO et requêtes préparées)
+- Hachage sécurisé des mots de passe (`password_hash`)
+- Échappement des données (XSS) avec `htmlspecialchars`
+- Protection contre les failles CSRF avec jetons aléatoires sur tous les formulaires
+- Protection des dossiers sensibles et entêtes de sécurité via `.htaccess`
 
 ## Licence
 
@@ -146,18 +92,4 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 ## Auteurs
 
-- **ReedBelca** - _Développement initial_
-
-## Contact
-
-Pour toute question ou suggestion, n'hésitez pas à me contacter :
-
-- Email : contact@calebadjeoda.dev
-- GitHub : @ReedBelca10
-- GitLab : @ReedBelca10
-
-## Remerciements
-
-- Bootstrap pour le framework CSS
-- PHPMailer pour la gestion des emails
-- La communauté open source pour son soutien
+- **ReedBelca** - _Développement_
