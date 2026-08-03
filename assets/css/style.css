@@ -233,7 +233,7 @@ body {
 }
 
 .dashboard-card .card-body {
-    padding: 2rem;
+    padding: 2.5rem;
 }
 
 .dashboard-card .display-4 {
@@ -245,7 +245,7 @@ body {
 .table-container {
     background: white;
     border-radius: 16px;
-    padding: 1.5rem;
+    padding: 2rem;
     box-shadow: var(--shadow-md);
     margin-top: 1.5rem;
 }
@@ -262,7 +262,7 @@ body {
     font-size: 0.8rem;
     letter-spacing: 0.05em;
     border-bottom: 2px solid var(--border-color);
-    padding: 1rem;
+    padding: 1.25rem 1.5rem;
 }
 
 .table tbody tr {
@@ -275,7 +275,7 @@ body {
 }
 
 .table td {
-    padding: 1rem;
+    padding: 1.25rem 1.5rem;
     color: var(--text-main);
     border-bottom: 1px solid var(--border-color);
 }

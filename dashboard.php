@@ -18,7 +18,7 @@ $stats = [
 include 'includes/header.php';
 ?>
 
-<div class="container py-4">
+<div class="container py-5">
     <h2 class="mb-4">Tableau de bord administrateur</h2>
     
     <!-- Cartes de statistiques -->

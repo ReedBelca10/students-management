@@ -20,7 +20,7 @@ $students = $stmt->fetchAll();
 include 'includes/header.php';
 ?>
 
-<div class="container py-4">
+<div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>LISTE DES ÉTUDIANTS</h2>
         <?php if (isset($_SESSION['profile']) && $_SESSION['profile'] === 'admin'): ?>
@@ -89,7 +89,7 @@ include 'includes/header.php';
                         <?php if (count($students) === 0): ?>
                         <tr>
                             <td colspan="<?php echo isset($_SESSION['profile']) && $_SESSION['profile'] === 'admin' ? '6' : '5'; ?>" 
-                                class="text-center py-4">
+                                class="text-center py-5">
                                 <div class="text-muted">
                                     <i class="fas fa-info-circle me-2"></i>
                                     Aucun étudiant enregistré
