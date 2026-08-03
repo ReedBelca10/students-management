@@ -10,6 +10,9 @@ if (!isset($_SESSION['profile']) || $_SESSION['profile'] !== 'admin') {
 
 // Vérifier si un ID d'étudiant a été fourni
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['student_id'])) {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
     $student_id = $_POST['student_id'];
     
     try {

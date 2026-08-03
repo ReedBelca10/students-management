@@ -2,6 +2,10 @@
 require_once 'pages/config/db.php';
 session_start();
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Vérifier si l'utilisateur est connecté et est admin
 if (!isset($_SESSION['profile']) || $_SESSION['profile'] !== 'admin') {
     header('Location: login.php');
@@ -9,6 +13,9 @@ if (!isset($_SESSION['profile']) || $_SESSION['profile'] !== 'admin') {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
     $code = strtoupper($_POST['stream_code']); // Convertir en majuscules
     $name = $_POST['stream_name'];
     
@@ -47,6 +54,7 @@ include 'includes/header.php';
                     <?php endif; ?>
 
                     <form method="POST" action="" class="needs-validation" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                         <div class="mb-3">
                             <label for="stream_code" class="form-label required-field">Code de la filière</label>
                             <input type="text" class="form-control text-uppercase" id="stream_code" name="stream_code" 

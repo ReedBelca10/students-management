@@ -1,7 +1,15 @@
 <?php
 require_once 'pages/config/db.php';
+session_start();
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 if (isset($_POST['register'])) {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
     $firstname = trim($_POST['firstname']);
     $lastname = trim($_POST['lastname']);
     $username = trim($_POST['username']);
@@ -78,12 +86,13 @@ if (isset($_POST['register'])) {
         <?php if (!empty($errors)): ?>
             <div class="alert alert-danger">
                 <?php foreach ($errors as $error): ?>
-                    <p class="mb-0"><?php echo $error; ?></p>
+                    <p class="mb-0"><?php echo htmlspecialchars($error); ?></p>
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
         
         <form method="POST" action="" id="registerForm">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
             <div class="row">
                     <div class="col-md-6">
                         <div class="form-group mb-3">

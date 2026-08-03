@@ -89,14 +89,18 @@ include 'includes/header.php';
                                            LEFT JOIN streams ON students.stream_code = streams.stream_code 
                                            ORDER BY students.stu_id DESC LIMIT 5");
                         while ($student = $stmt->fetch()) {
+                            $fname = htmlspecialchars($student['stu_firstname']);
+                            $lname = htmlspecialchars($student['stu_lastname']);
+                            $sname = htmlspecialchars($student['stream_name']);
+                            $sid = (int)$student['stu_id'];
                             echo "<div class='list-group-item'>
                                     <div class='d-flex justify-content-between align-items-center'>
                                         <div>
-                                            <strong>{$student['stu_firstname']} {$student['stu_lastname']}</strong>
+                                            <strong>{$fname} {$lname}</strong>
                                             <br>
-                                            <small class='text-muted'>{$student['stream_name']}</small>
+                                            <small class='text-muted'>{$sname}</small>
                                         </div>
-                                        <a href='student_edit.php?id={$student['stu_id']}' 
+                                        <a href='student_edit.php?id={$sid}' 
                                            class='btn btn-sm btn-outline-primary'>
                                             <i class='fas fa-edit'></i>
                                         </a>

@@ -1,7 +1,12 @@
 <?php
 require_once 'pages/config/db.php';
+session_start();
 
 if (isset($_POST['login'])) {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
+
     $username = trim($_POST['username']);
     $password = $_POST['password'];
     
@@ -25,6 +30,10 @@ if (isset($_POST['login'])) {
     } else {
         $error = "Nom d'utilisateur ou mot de passe incorrect";
     }
+}
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 ?>
 <!DOCTYPE html>
@@ -52,6 +61,7 @@ if (isset($_POST['login'])) {
             <?php endif; ?>
             
             <form method="POST" action="">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <div class="form-group mb-3">
                     <label for="username" class="form-label required-field">Identifiant</label>
                     <i class="fas fa-user"></i>

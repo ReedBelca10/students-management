@@ -2,6 +2,10 @@
 require_once 'pages/config/db.php';
 session_start();
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Récupérer la liste des étudiants avec leurs filières
 $query = "SELECT 
             students.*, 
@@ -29,7 +33,7 @@ include 'includes/header.php';
     <?php if (isset($_SESSION['success'])): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?php 
-            echo $_SESSION['success'];
+            echo htmlspecialchars($_SESSION['success']);
             unset($_SESSION['success']);
             ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -114,6 +118,7 @@ include 'includes/header.php';
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                 <form id="deleteForm" action="student_delete.php" method="POST" style="display: inline;">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <input type="hidden" name="student_id" id="studentIdToDelete">
                     <button type="submit" class="btn btn-danger">Supprimer</button>
                 </form>

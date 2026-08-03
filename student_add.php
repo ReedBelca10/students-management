@@ -2,6 +2,11 @@
 require_once 'pages/config/db.php';
 session_start();
 
+// Générer le jeton CSRF
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Vérifier si l'utilisateur est connecté et est admin
 if (!isset($_SESSION['profile']) || $_SESSION['profile'] !== 'admin') {
     header('Location: login.php');
@@ -13,6 +18,9 @@ $stmt = $pdo->query("SELECT * FROM streams ORDER BY stream_name");
 $streams = $stmt->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
     try {
         $stmt = $pdo->prepare("
             INSERT INTO students (
@@ -72,16 +80,17 @@ include 'includes/header.php';
                     <?php endif; ?>
 
                     <form method="POST" action="" class="needs-validation" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="lastname" class="form-label required-field">Nom</label>
                                 <input type="text" class="form-control" id="lastname" name="lastname" 
-                                       required value="<?php echo $_POST['lastname'] ?? ''; ?>">
+                                       required value="<?php echo htmlspecialchars($_POST['lastname'] ?? ''); ?>">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="firstname" class="form-label required-field">Prénoms</label>
                                 <input type="text" class="form-control" id="firstname" name="firstname" 
-                                       required value="<?php echo $_POST['firstname'] ?? ''; ?>">
+                                       required value="<?php echo htmlspecialchars($_POST['firstname'] ?? ''); ?>">
                             </div>
                         </div>
 
@@ -89,12 +98,12 @@ include 'includes/header.php';
                             <div class="col-md-6 mb-3">
                                 <label for="birthday" class="form-label required-field">Date de naissance</label>
                                 <input type="date" class="form-control" id="birthday" name="birthday" 
-                                       required value="<?php echo $_POST['birthday'] ?? ''; ?>">
+                                       required value="<?php echo htmlspecialchars($_POST['birthday'] ?? ''); ?>">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="birthplace" class="form-label">Lieu de naissance</label>
                                 <input type="text" class="form-control" id="birthplace" name="birthplace" 
-                                       value="<?php echo $_POST['birthplace'] ?? ''; ?>">
+                                       value="<?php echo htmlspecialchars($_POST['birthplace'] ?? ''); ?>">
                             </div>
                         </div>
 
@@ -110,32 +119,32 @@ include 'includes/header.php';
                             <div class="col-md-6 mb-3">
                                 <label for="phone" class="form-label">Téléphone</label>
                                 <input type="tel" class="form-control" id="phone" name="phone" 
-                                       value="<?php echo $_POST['phone'] ?? ''; ?>">
+                                       value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>">
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label for="email" class="form-label required-field">Email</label>
                             <input type="email" class="form-control" id="email" name="email" 
-                                   required value="<?php echo $_POST['email'] ?? ''; ?>">
+                                   required value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
                         </div>
 
                         <div class="mb-3">
                             <label for="address" class="form-label">Adresse</label>
                             <input type="text" class="form-control" id="address" name="address" 
-                                   value="<?php echo $_POST['address'] ?? ''; ?>">
+                                   value="<?php echo htmlspecialchars($_POST['address'] ?? ''); ?>">
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="city" class="form-label">Ville</label>
                                 <input type="text" class="form-control" id="city" name="city" 
-                                       value="<?php echo $_POST['city'] ?? ''; ?>">
+                                       value="<?php echo htmlspecialchars($_POST['city'] ?? ''); ?>">
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="country" class="form-label">Pays</label>
                                 <input type="text" class="form-control" id="country" name="country" 
-                                       value="<?php echo $_POST['country'] ?? ''; ?>">
+                                       value="<?php echo htmlspecialchars($_POST['country'] ?? ''); ?>">
                             </div>
                         </div>
 

@@ -2,6 +2,10 @@
 require_once 'pages/config/db.php';
 session_start();
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Vérifier si l'utilisateur est connecté et est admin
 if (!isset($_SESSION['profile']) || $_SESSION['profile'] !== 'admin') {
     header('Location: login.php');
@@ -32,6 +36,9 @@ $stmt = $pdo->query("SELECT * FROM streams ORDER BY stream_name");
 $streams = $stmt->fetchAll();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        die("Erreur de sécurité : Jeton CSRF invalide.");
+    }
     try {
         $stmt = $pdo->prepare("
             UPDATE students SET
@@ -99,6 +106,7 @@ include 'includes/header.php';
                     <?php endif; ?>
 
                     <form method="POST" action="" class="needs-validation" novalidate>
+                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="lastname" class="form-label required-field">Nom</label>
