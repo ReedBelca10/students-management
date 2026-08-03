@@ -1,7 +1,7 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
     <div class="container">
         <a class="navbar-brand d-flex align-items-center" href="<?php echo (isset($_SESSION['profile']) && $_SESSION['profile'] === 'admin') ? 'dashboard.php' : 'students_list.php'; ?>">
             <i class="fas fa-graduation-cap me-2"></i>

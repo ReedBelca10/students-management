@@ -152,8 +152,9 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 
 Pour toute question ou suggestion, n'hésitez pas à me contacter :
 
-- Email : reedbelca55@gmail.com
+- Email : contact@calebadjeoda.dev
 - GitHub : @ReedBelca10
+- GitLab : @ReedBelca10
 
 ## Remerciements
 
