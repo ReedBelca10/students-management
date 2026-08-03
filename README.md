@@ -1,8 +1,8 @@
-# GestionÉtudiants 📚
+# GestionÉtudiants
 
 Application web de gestion des étudiants et des filières développée avec PHP, MySQL et Bootstrap.
 
-## 🌟 Fonctionnalités
+## Fonctionnalités
 
 - **Gestion des Étudiants**
   - Ajouter, modifier et supprimer des étudiants
@@ -21,7 +21,7 @@ Application web de gestion des étudiants et des filières développée avec PHP
   - Gestion des profils utilisateurs
   - Protection contre les injections SQL
 
-## 🔧 Prérequis
+## Prérequis
 
 - PHP 8.0 ou supérieur
 - MySQL 5.7 ou supérieur
@@ -34,15 +34,17 @@ Application web de gestion des étudiants et des filières développée avec PHP
   - fileinfo
   - gd
 
-## 📥 Installation
+## Installation
 
 1. **Cloner le projet**
+
    ```bash
    git clone https://github.com/votre-username/Gestion_Etudiants.git
    cd Gestion_Etudiants
    ```
 
 2. **Installer les dépendances**
+
    ```bash
    composer install
    ```
@@ -59,7 +61,7 @@ Application web de gestion des étudiants et des filières développée avec PHP
 4. **Configuration email (pour la réinitialisation de mot de passe)**
    - Modifier les paramètres SMTP dans `pages/config/mail.php`
 
-## 🚀 Démarrage
+## Démarrage
 
 1. Assurez-vous que votre serveur Apache est en cours d'exécution
 2. Accédez à l'application via votre navigateur :
@@ -67,35 +69,35 @@ Application web de gestion des étudiants et des filières développée avec PHP
    http://localhost/Gestion_Etudiants/
    ```
 
-## 🔐 Compte par défaut
+## Compte par défaut
 
 - **Admin**
   - Email : testneyla@gmail.com
   - Nom utilisateur : Reed1020
   - Mot de passe : 1234Reed$
 
-## 📁 Structure du projet
+## Structure du projet
 
 ```
 Gestion_Etudiants/
-├── assets/
-│   ├── css/
-│   ├── js/
-│   └── img/
-├── db/
-│   ├── schema.sql
-│   └── seed.sql
-├── includes/
-│   ├── auth.php
-│   ├── header.php
-│   └── footer.php
-├── pages/
-│   └── config/
-├── vendor/
-└── index.php
+ assets/
+    css/
+    js/
+    img/
+ db/
+    schema.sql
+    seed.sql
+ includes/
+    auth.php
+    header.php
+    footer.php
+ pages/
+    config/
+ vendor/
+ index.php
 ```
 
-## 🛠️ Technologies utilisées
+## Technologies utilisées
 
 - **Frontend**
   - HTML5
@@ -110,16 +112,16 @@ Gestion_Etudiants/
   - MySQL
   - PHPMailer
 
-## 🔒 Sécurité
+## Sécurité
 
 - Protection contre les injections SQL
-- Hachage sécurisé des mots de passe 
+- Hachage sécurisé des mots de passe
 - Validation des données
 - Protection CSRF
 - Sessions sécurisées
 - Connexion SMTP sécurisée
 
-## 🔄 Mises à jour régulières
+## Mises à jour régulières
 
 Pour mettre à jour votre installation :
 
@@ -128,7 +130,7 @@ git pull origin main
 composer update
 ```
 
-## 📝 Contribution
+## Contribution
 
 Les contributions sont les bienvenues ! N'hésitez pas à :
 
@@ -138,25 +140,23 @@ Les contributions sont les bienvenues ! N'hésitez pas à :
 4. Push sur votre fork
 5. Ouvrir une Pull Request
 
-## 📜 Licence
+## Licence
 
 Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
-## 👥 Auteurs
+## Auteurs
 
 - **ReedBelca** - _Développement initial_
 
-## 📧 Contact
+## Contact
 
 Pour toute question ou suggestion, n'hésitez pas à me contacter :
+
 - Email : reedbelca55@gmail.com
 - GitHub : @ReedBelca10
 
-## 🙏 Remerciements
+## Remerciements
 
 - Bootstrap pour le framework CSS
 - PHPMailer pour la gestion des emails
 - La communauté open source pour son soutien
-
----
-⌨️ avec ❤️ par ReedBelca
